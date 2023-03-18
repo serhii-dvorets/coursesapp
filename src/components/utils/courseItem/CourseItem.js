@@ -1,7 +1,8 @@
 import React, { useRef, useState } from "react";
 import style from "./CourseItem.module.scss";
 import { Rate } from "antd";
-import ReactHlsPlayer from "react-hls-player";
+// import ReactHlsPlayer from "react-hls-player";
+import ReactPlayer from "react-player";
 
 export default function CourseItem(props) {
   const [isPlaying, setIsPlaying] = useState(false);
@@ -18,7 +19,11 @@ export default function CourseItem(props) {
   // ${previewImageLink}/lesson-${order}.webp. Наприклад https://wisey.app/assets/images/web/lessons-covers/lack-of-motivation-how-to-overcome-it/lesson-1/lesson-1.webp.
   // https://wisey.app/videos/learn-and-grow-relationships/preview/AppleHLS1/preview.m3u8
   return (
-    <div className={style.container} onMouseEnter={() => setIsPlaying(true)} onMouseLeave={() => setIsPlaying(false)}>
+    <div
+      className={style.container}
+      onMouseEnter={() => setIsPlaying(true)}
+      onMouseLeave={() => setIsPlaying(false)}
+    >
       <div className={style.description__container}>
         <h2 className={style.title}>{title}</h2>
         <p className={style.subTitle}>Lessons is course: {lessonsCount}</p>
@@ -38,17 +43,19 @@ export default function CourseItem(props) {
         <Rate value={rating} className={style.rating} />
       </div>
       <div className={style.image__container}>
-        {isPlaying ? (
-          <ReactHlsPlayer
-            src={link}
-            autoPlay={isPlaying}
-            controls={false}
+          <ReactPlayer
+            url={link}
+            playing={isPlaying}
+            muted={true}
             width="100%"
             height="auto"
+            config={{
+              file: {
+                forceVideo: true,
+              },
+            }}
           />
-        ) : (
-          <img alt={title} src={imageUrl} className={style.image} />
-        )}
+          <img alt={title} src={imageUrl} className={style.image} style={{display: `${isPlaying ? 'none' : 'block'}`}}/>
       </div>
     </div>
   );
