@@ -1,12 +1,12 @@
-import React, { useRef, useState } from "react";
+import React, { useState } from "react";
 import style from "./CourseItem.module.scss";
 import { Rate } from "antd";
-// import ReactHlsPlayer from "react-hls-player";
 import ReactPlayer from "react-player";
+import classnmes from 'classnames';
 
 export default function CourseItem(props) {
   const [isPlaying, setIsPlaying] = useState(false);
-  const { title, meta, description, lessonsCount, rating, tags } = props?.data;
+  const { title, meta, lessonsCount, rating, tags } = props?.data;
   let previewImageLink;
   let link;
 
@@ -16,8 +16,7 @@ export default function CourseItem(props) {
   }
 
   const imageUrl = previewImageLink ? previewImageLink + "/preview.webp" : "";
-  // ${previewImageLink}/lesson-${order}.webp. Наприклад https://wisey.app/assets/images/web/lessons-covers/lack-of-motivation-how-to-overcome-it/lesson-1/lesson-1.webp.
-  // https://wisey.app/videos/learn-and-grow-relationships/preview/AppleHLS1/preview.m3u8
+
   return (
     <div
       className={style.container}
@@ -25,7 +24,7 @@ export default function CourseItem(props) {
       onMouseLeave={() => setIsPlaying(false)}
     >
       <div className={style.description__container}>
-        <h2 className={style.title}>{title}</h2>
+        <h1 className={classnmes(`${style.title} ${style.mainTitle}`)}>{title}</h1>
         <p className={style.subTitle}>Lessons is course: {lessonsCount}</p>
         {tags.length > 0 && (
           <div className={style.skills__container}>
